@@ -7,23 +7,27 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Services\StoreUserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController
 {
-    function register(RegisterRequest $request)
+    private $userService;
+
+    public function __construct(StoreUserService $userService)
     {
-        $data = $request->validated();
+        $this->userService = $userService;
+    }
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+    function register(RegisterRequest $request): JsonResponse
+    {
+        $user = $this->userService->execute($request->validated());
 
-        $token = $user->createToken('main')->plainTextToken;
+        $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
             'user' => $user,
