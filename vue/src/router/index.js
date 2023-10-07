@@ -1,12 +1,34 @@
 import {createRouter, createWebHistory} from "vue-router";
 import AuthLayout from '../components/AuthLayout.vue';
 import Dashboard from '../views/Dashboard.vue';
+import Transactions from '../views/Transactions.vue';
+import DefaultLayout from '../components/DefaultLayout.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import store from "../store";
 
 const routes = [
-    {path: '/dashboard', name: 'Dashboard', component: Dashboard},
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: DefaultLayout,
+        children: [
+            {
+                path: '/dashboard',
+                name: 'Dashboard',
+                component: Dashboard
+            },
+            {
+                path: '/transactions',
+                name: 'Transactions',
+                component: Transactions
+            },
+            {
+                path: '/dashboard',
+                name: 'Dashboard',
+                component: Dashboard
+            }
+        ]},
     {
         path: '/auth',
         redirect: '/Login',
