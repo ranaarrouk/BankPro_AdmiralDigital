@@ -13,12 +13,12 @@ class Transaction extends Model
 
     public function senderAccount()
     {
-        return $this->hasMany(Account::class, 'from_account_id');
+        return $this->belongsTo(Account::class, 'from_account_id');
     }
 
     public function recipientAccount()
     {
-        return $this->hasMany(Account::class, 'to_account_id');
+        return $this->belongsTo(Account::class, 'to_account_id');
     }
 
 

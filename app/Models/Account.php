@@ -15,4 +15,14 @@ class Account extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function sentTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'from_account_id');
+    }
+
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'to_account_id');
+    }
 }

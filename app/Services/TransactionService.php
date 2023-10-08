@@ -30,8 +30,11 @@ class TransactionService implements TransactionServiceInterface
 
     public function getUserTransactions(array $data): Collection
     {
-        $criteria['from_account_id'] = Auth::id();
-        $criteria['to_account_id'] = Auth::id();
-        return $this->transactionRepository->getByCriteria($criteria);
+        $conditions = [
+            ['from_account_id', '=', Auth::id()],
+            ['to_account_id', '=', Auth::id()],
+        ];
+        // ['senderAccount.user', 'recipientAccount.user']
+        return $this->transactionRepository->whereOrWhere($conditions, ['*'], ['senderAccount.user', 'recipientAccount.user'], true);
     }
 }

@@ -45,6 +45,9 @@ interface RepositoryInterface
      */
     public function getByCriteria(array $criteria, array $columns = ['*'], array $relations = []): Collection;
 
+
+    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false): Collection;
+
     /**
      * @param array $attributes
      * @return Model

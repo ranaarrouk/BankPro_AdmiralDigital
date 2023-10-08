@@ -23,8 +23,8 @@ class TransactionController extends Controller
     public function getMyTransactions(TransferMoneyRequest $request)
     {
         try {
-            $this->transactionService->getUserTransactions(['from_account_id' => Auth::id()]);
-            return response()->json(Transaction::all());
+            $data = $this->transactionService->getUserTransactions($request->validated());
+            return response()->json(['data' => $data, 'success' => true]);
 
         } catch (\Exception $exception) {
 

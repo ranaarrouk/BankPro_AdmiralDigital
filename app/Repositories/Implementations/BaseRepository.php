@@ -42,6 +42,27 @@ class BaseRepository implements RepositoryInterface
         return $this->newQuery()->select($columns)->with($relations)->where($criteria)->get();
     }
 
+    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false): Collection
+    {
+        $query = $this->newQuery()->select($columns)->with($relations);
+
+        foreach ($conditions as $condition) {
+            if (count($condition) !== 3) {
+                throw new InvalidArgumentException('Invalid condition format. Each condition should have 3 elements: column, operator, value.');
+            }
+
+            [$column, $operator, $value] = $condition;
+
+            if ($orWhere) {
+                $query->orWhere($column, $operator, $value);
+            } else {
+                $query->where($column, $operator, $value);
+            }
+        }
+        return $query->get();
+    }
+
+
     public function create(array $attributes): Model
     {
         return $this->newQuery()->create($attributes);
