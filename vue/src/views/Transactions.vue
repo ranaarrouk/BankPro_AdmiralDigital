@@ -47,24 +47,24 @@
                         <td class="border border-gray-300 px-4 py-2">{{ transaction.type}}</td>
                         <td class="border border-gray-300 px-4 py-2 ">
                             <span class="">
-                                {{ transaction.sender_account.user.name}}
+                                {{ transaction.sender}}
                                 <br>
                             </span>
                             <span class="text-gray-500">
-                                 Account number: {{ transaction.sender_account.number}}
+                                 Account number: {{ transaction.sender_account_number}}
                             </span>
                         </td>
                         <td class="border border-gray-300 px-4 py-2 ">
                             <span class="">
-                                {{ transaction.recipient_account.user.name}}
+                                {{ transaction.recipient}}
                                 <br>
                             </span>
                             <span class="text-gray-500">
-                                 Account number: {{ transaction.recipient_account.number}}
+                                 Account number: {{ transaction.recipient_account_number}}
                             </span>
                         </td>
                         <td class="border border-gray-300 px-4 py-2">{{ transaction.amount}}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ transaction.created_at}}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ transaction.creation_date}}</td>
                     </tr>
                     <!-- Add more rows as needed -->
                     </tbody>

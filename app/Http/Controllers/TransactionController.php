@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepositeRequest;
 use App\Http\Requests\TransferMoneyRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionServiceInterface;
 use App\Services\TransactionService;
@@ -24,10 +25,10 @@ class TransactionController extends Controller
     {
         try {
             $data = $this->transactionService->getUserTransactions($request->validated());
-            return response()->json(['data' => $data, 'success' => true]);
+            return TransactionResource::collection($data);
 
         } catch (\Exception $exception) {
-
+            return response()->json(['message' => 'Something went wrong'], 500);
         }
     }
 
