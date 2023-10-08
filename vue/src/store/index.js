@@ -7,6 +7,10 @@ const store = createStore({
             data: {},
             token: sessionStorage.getItem("Token")
         },
+        transactions: {
+            data: [],
+            loading: false
+        }
     },
     getters: {},
     actions: {
@@ -26,6 +30,15 @@ const store = createStore({
                     return response
                 });
         },
+        getTransactions({commit}) {
+            commit('setTransactionsLoading', true);
+            return axiosClient.get('/transactions')
+                .then((response) => {
+                    commit('setTransactions', response);
+                    commit('setTransactionsLoading', false);
+                    return response
+                });
+        }
     },
     mutations: {
         logout: (state) => {
@@ -37,6 +50,12 @@ const store = createStore({
             state.user.token = response.data.token;
             sessionStorage.setItem('Token', response.data.token);
         },
+        setTransactionsLoading: (state, loading) => {
+            state.transactions.loading = loading;
+        },
+        setTransactions: (state, transactions) => {
+            state.transactions.data = transactions.data;
+        }
     },
     modules: {},
 });

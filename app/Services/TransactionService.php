@@ -5,11 +5,13 @@ namespace App\Services;
 
 
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionService implements TransactionServiceInterface
 {
 
-    private TransactionRepository $transactionRepository;
+    private TransactionRepositoryInterface $transactionRepository;
 
     public function __construct(TransactionRepositoryInterface $transactionRepository)
     {
@@ -24,5 +26,12 @@ class TransactionService implements TransactionServiceInterface
     public function transferMoney($accountNumber, $amount): void
     {
         // TODO: Implement transferMoney() method.
+    }
+
+    public function getUserTransactions(array $data): Collection
+    {
+        $criteria['from_account_id'] = Auth::id();
+        $criteria['to_account_id'] = Auth::id();
+        return $this->transactionRepository->getByCriteria($criteria);
     }
 }
