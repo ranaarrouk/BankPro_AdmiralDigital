@@ -16,7 +16,7 @@ use Illuminate\Validation\Rules\Password;
 
 class AuthController
 {
-    private $userService;
+    protected StoreUserService $userService;
 
     public function __construct(StoreUserService $userService)
     {
