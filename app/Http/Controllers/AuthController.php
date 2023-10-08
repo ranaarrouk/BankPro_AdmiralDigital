@@ -13,19 +13,24 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
+use App\Services\AccountServiceInterface;
 
 class AuthController
 {
     protected StoreUserService $userService;
+    protected AccountServiceInterface $accountService;
 
-    public function __construct(StoreUserService $userService)
+    public function __construct(StoreUserService $userService, AccountServiceInterface $accountService)
     {
         $this->userService = $userService;
+        $this->accountService = $accountService;
     }
 
     function register(RegisterRequest $request): JsonResponse
     {
         $user = $this->userService->execute($request->validated());
+
+        $account = $this->accountService->create($user);
 
         $token = $user->createToken('authToken')->plainTextToken;
 

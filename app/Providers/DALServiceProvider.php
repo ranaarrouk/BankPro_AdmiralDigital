@@ -10,6 +10,8 @@ use App\Repositories\Implementations\UserRepository;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Services\AccountServiceInterface;
+use App\Services\AccountService;
 use App\Services\TransactionService;
 use App\Services\TransactionServiceInterface;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +28,7 @@ class DALServiceProvider extends ServiceProvider
             AccountRepositoryInterface::class => AccountRepository::class,
             TransactionRepositoryInterface::class => TransactionRepository::class,
             TransactionServiceInterface::class => TransactionService::class,
+            AccountServiceInterface::class => AccountService::class,
         ];
 
         foreach ($toBind as $interface => $implementation) {
