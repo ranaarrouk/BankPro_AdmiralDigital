@@ -10,6 +10,11 @@ const store = createStore({
         transactions: {
             data: [],
             loading: false
+        },
+        notification: {
+            show: false,
+            type: null,
+            message: null
         }
     },
     getters: {},
@@ -30,6 +35,9 @@ const store = createStore({
                     return response
                 });
         },
+        logout({commit}) {
+            commit('logout');
+        },
         getTransactions({commit}) {
             commit('setTransactionsLoading', true);
             return axiosClient.get('/transactions')
@@ -37,6 +45,13 @@ const store = createStore({
                     commit('setTransactions', response);
                     commit('setTransactionsLoading', false);
                     return response
+                });
+        },
+        deposit({commit}, amount) {
+            return axiosClient.post('/deposit/', amount)
+                .then((response) => {
+
+                    return response;
                 });
         }
     },
@@ -55,6 +70,14 @@ const store = createStore({
         },
         setTransactions: (state, transactions) => {
             state.transactions.data = transactions.data;
+        },
+        notify: (state, {type, message}) => {
+            state.notification.show = true;
+            state.notification.type = type;
+            state.notification.message = message;
+            setTimeout(() => {
+                state.notification.show = false;
+            }, 3000);
         }
     },
     modules: {},

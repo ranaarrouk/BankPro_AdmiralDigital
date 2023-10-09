@@ -32,10 +32,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function deposite(DepositeRequest $request)
+    public function deposit(DepositeRequest $request)
     {
         try {
-
             $this->transactionService->deposit($request->validated());
 
         } catch (\Exception $exception) {

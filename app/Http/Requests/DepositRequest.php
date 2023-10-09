@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DepositeRequest extends FormRequest
+class DepositRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class DepositeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amount' => 'required|numeric|min:0.1'
         ];
     }
 }

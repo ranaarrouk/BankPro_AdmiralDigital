@@ -64,8 +64,8 @@ class AuthController
         $user = Auth::user();
         $user->currentAccessToken()->delete();
 
-        return response()->json([
+        return response()->withHeaders(['Accept: Application/json'])->json([
             'success' => true,
-        ], 200);
+        ]);
     }
 }

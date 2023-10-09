@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +21,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::get('/transactions', [\App\Http\Controllers\TransactionController::class, 'getMyTransactions']);
+    Route::get('/transactions', [TransactionController::class, 'getMyTransactions']);
+    Route::post('/deposit', [AccountController::class, 'deposit']);
+    Route::post('/transfer', [AccountController::class, 'transferMoney']);
 });
-Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
-Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);

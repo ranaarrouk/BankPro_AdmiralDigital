@@ -5,7 +5,7 @@
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">My Transactions</h1>
                 <div class="">
                     <router-link
-                        :to="{ name: 'Transactions'}"
+                        :to="{ name: 'Deposit'}"
                         class="px-3 py-2 rounded text-white bg-emerald-500 hover:bg-emerald-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-4 h-4 -mt-1 inline-block">
@@ -15,7 +15,7 @@
                         Deposit
                     </router-link>
                     <router-link
-                        :to="{ name: 'Transactions'}"
+                        :to="{ name: 'Transfer'}"
                         class="px-3 py-2 rounded text-white bg-amber-500 hover:bg-amber-600 ml-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-4 h-4 -mt-1 inline-block">

@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Account;
 use App\Models\User;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class AccountService implements AccountServiceInterface
 {
@@ -27,4 +28,16 @@ class AccountService implements AccountServiceInterface
         $data['balance'] = 0;
         return $this->accountRepository->create($data);
     }
+
+    public function deposit($data): void
+    {
+        $account = Auth::user()->account;
+        $this->accountRepository->deposit($account, $account->balance + $data['amount']);
+    }
+
+    public function transferMoney($accountNumber, $amount): void
+    {
+        // TODO: Implement transferMoney() method.
+    }
+
 }
