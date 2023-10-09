@@ -8,14 +8,17 @@ use App\Models\Account;
 use App\Models\User;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use App\Services\TransactionServiceInterface;
 
 class AccountService implements AccountServiceInterface
 {
     private AccountRepositoryInterface $accountRepository;
+    private TransactionServiceInterface $transactionService;
 
-    public function __construct(AccountRepositoryInterface $accountRepository)
+    public function __construct(AccountRepositoryInterface $accountRepository, TransactionServiceInterface $transactionService)
     {
         $this->accountRepository = $accountRepository;
+        $this->transactionService = $transactionService;
     }
 
     public function create(User $user)
@@ -33,6 +36,7 @@ class AccountService implements AccountServiceInterface
     {
         $account = Auth::user()->account;
         $this->accountRepository->deposit($account, $account->balance + $data['amount']);
+        $this->transactionService->createDepositTransaction($account, $data['amount']);
     }
 
     public function transferMoney($accountNumber, $amount): void
