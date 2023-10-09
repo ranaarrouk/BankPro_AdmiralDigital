@@ -4,6 +4,7 @@ import Dashboard from '../views/Dashboard.vue';
 import Transactions from '../views/Transactions.vue';
 import Deposit from '../views/Deposit.vue';
 import Transfer from '../views/Transfer.vue';
+import Account from '../views/Account.vue';
 import DefaultLayout from '../components/DefaultLayout.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
@@ -34,6 +35,11 @@ const routes = [
                 path: '/transfer',
                 name: 'Transfer',
                 component: Transfer
+            },
+            {
+                path: '/account',
+                name: 'Account',
+                component: Account
             }
         ]},
     {

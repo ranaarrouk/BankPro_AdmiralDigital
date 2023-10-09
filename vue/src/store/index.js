@@ -5,7 +5,8 @@ const store = createStore({
     state: {
         user: {
             data: {},
-            token: sessionStorage.getItem("Token")
+            token: sessionStorage.getItem("Token"),
+            balance: 0
         },
         transactions: {
             data: [],
@@ -59,10 +60,13 @@ const store = createStore({
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
+            state.user.balance = 0;
         },
         setUser: (state, response) => {
-            state.user.data = response.data.user;
-            state.user.token = response.data.token;
+            console.log(response);
+            state.user.data = response.data;
+            state.user.token = response.data.data.token;
+            alert(state.user.token);
             sessionStorage.setItem('Token', response.data.token);
         },
         setTransactionsLoading: (state, loading) => {

@@ -124,7 +124,7 @@
     const navigation = [
         {name: 'Dashboard', to: {name: 'Dashboard'}},
         {name: 'Transactions', to: {name: 'Transactions'}},
-        {name: 'My Account', to: {name: 'Dashboard'}},
+        {name: 'My Account', to: {name: 'Account'}},
     ];
 
     const router = useRouter();

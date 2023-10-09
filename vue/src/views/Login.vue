@@ -76,7 +76,8 @@
           name: 'Dashboard'
         });
       }).catch(err => {
-      errorMsg.value = err.response.data.error;
+          console.log(err);
+      errorMsg.value = err.response.data.message;
     });
   }
 

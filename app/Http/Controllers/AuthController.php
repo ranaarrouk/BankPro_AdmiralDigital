@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\StoreUserService;
@@ -51,12 +52,9 @@ class AuthController
         }
 
         $user = Auth::user();
-        $token = $user->createToken('authToken')->plainTextToken;
+//        $token = $user->createToken('authToken')->plainTextToken;
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ], 200);
+        return new UserResource($user);
     }
 
     function logout(Request $request)
