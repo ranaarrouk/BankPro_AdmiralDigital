@@ -54,6 +54,13 @@ const store = createStore({
 
                     return response;
                 });
+        },
+        transfer({commit}, data) {
+            return axiosClient.post('/transfer', data)
+                .then((response) => {
+
+                    return response;
+                });
         }
     },
     mutations: {
@@ -66,7 +73,6 @@ const store = createStore({
             console.log(response);
             state.user.data = response.data;
             state.user.token = response.data.data.token;
-            alert(state.user.token);
             sessionStorage.setItem('Token', response.data.token);
         },
         setTransactionsLoading: (state, loading) => {

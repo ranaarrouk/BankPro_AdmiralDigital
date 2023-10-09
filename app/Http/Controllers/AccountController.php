@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\AccountServiceInterface;
 use App\Http\Requests\DepositRequest;
 use App\Http\Requests\TransferMoneyRequest;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -30,10 +31,12 @@ class AccountController extends Controller
     public function transferMoney(TransferMoneyRequest $request)
     {
         try {
-            $this->accountService->transferMoney($request->validated());
+            DB::transaction(function () use ($request) {
+                $this->accountService->transferMoney($request->validated());
+            });
 
         } catch (\Exception $exception) {
-
+            return response()->json(['message' => $exception->getMessage()], 422);
         }
     }
 }

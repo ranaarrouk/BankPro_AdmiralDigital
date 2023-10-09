@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface TransactionServiceInterface
 {
-    public function getUserTransactions(array $data): Collection;
+    public function getUserTransactions(): Collection;
 
     public function createDepositTransaction(Account $account, $amount) : Model;
 

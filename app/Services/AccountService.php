@@ -39,9 +39,22 @@ class AccountService implements AccountServiceInterface
         $this->transactionService->createDepositTransaction($account, $data['amount']);
     }
 
-    public function transferMoney($accountNumber, $amount): void
+    public function transferMoney($data): void
     {
-        // TODO: Implement transferMoney() method.
+        $account = Auth::user()->account;
+        $accountNumber = $data['account_number'];
+        $toAccount = $this->accountRepository->findByCriteria(['number' => $accountNumber]);
+        $amount = $data['amount'];
+
+        if (!$toAccount)
+            throw new \Exception('There is no account with this account number');
+
+        if ($amount < 0 || $amount > $account->balance)
+            throw new \Exception('There is no enough money in your account');
+
+        $this->accountRepository->update($account, ['balance' => $account->balance - $amount]);
+        $this->accountRepository->update($toAccount, ['balance' => $toAccount->balance + $amount]);
+        $this->transactionService->createTransferTransaction($account, $toAccount, $amount);
     }
 
 }

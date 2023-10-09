@@ -13,5 +13,5 @@ interface AccountServiceInterface
 
     public function deposit($amount) : void;
 
-    public function transferMoney($accountNumber, $amount) : void;
+    public function transferMoney($data) : void;
 }

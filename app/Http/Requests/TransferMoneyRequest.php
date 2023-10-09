@@ -22,7 +22,8 @@ class TransferMoneyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'account_number' => 'required|numeric|exists:accounts,number',
+            'amount' => 'required|numeric|min:0.1',
         ];
     }
 }

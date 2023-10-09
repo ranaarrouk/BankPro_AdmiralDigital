@@ -21,35 +21,14 @@ class TransactionController extends Controller
         $this->transactionService = $service;
     }
 
-    public function getMyTransactions(TransferMoneyRequest $request)
+    public function getMyTransactions(Request $request)
     {
         try {
-            $data = $this->transactionService->getUserTransactions($request->validated());
+            $data = $this->transactionService->getUserTransactions($request->i);
             return TransactionResource::collection($data);
 
         } catch (\Exception $exception) {
-            return response()->json(['message' => 'Something went wrong'], 500);
-        }
-    }
-
-    public function deposit(DepositeRequest $request)
-    {
-        try {
-            $this->transactionService->deposit($request->validated());
-
-        } catch (\Exception $exception) {
-
-        }
-    }
-
-    public function transferMoney(TransferMoneyRequest $request)
-    {
-        try {
-
-            $this->transactionService->transferMoney($request->validated());
-
-        } catch (\Exception $exception) {
-
+            return response()->json(['message' => $exception->getMessage()], 500);
         }
     }
 

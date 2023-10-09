@@ -21,7 +21,7 @@ class TransactionService implements TransactionServiceInterface
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function getUserTransactions(array $data): Collection
+    public function getUserTransactions(): Collection
     {
         $conditions = [
             ['from_account_id', '=', Auth::id()],
