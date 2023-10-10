@@ -10,7 +10,7 @@
                 </thead>
                 <tbody>
                 <tr class="text-center">
-                    <td class="border border-gray-300 px-4 py-2">{{ user.data.account_number}}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ user.account_number}}</td>
                     <td class="border border-gray-300 px-4 py-2 ">{{ user.balance}}</td>
                 </tr>
                 </tbody>
@@ -28,7 +28,7 @@
 
     let errorMsg = ref('');
 
-    const user = computed(() => store.state.user);
+    const user = computed(() => store.state.user.data);
 </script>
 
 

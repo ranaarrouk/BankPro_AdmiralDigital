@@ -24,7 +24,7 @@ class AccountController extends Controller
     {
         try {
             $this->accountService->deposit($request->validated());
-            return response()->json(['message' => 'Deposit Successfully', 'new_balance' => Auth::user()->account->balance]);
+            return response()->json(['message' => 'Deposit Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
 
         } catch (\Exception $exception) {
 
@@ -37,7 +37,7 @@ class AccountController extends Controller
             DB::transaction(function () use ($request) {
                 $this->accountService->transferMoney($request->validated());
             });
-            return response()->json(['message' => 'Deposit Successfully', 'new_balance' => Auth::user()->account->balance]);
+            return response()->json(['message' => 'Deposit Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
         } catch (\Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);
         }

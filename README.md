@@ -16,6 +16,8 @@ Simple banking system
 
 3. Business Login Layer: find on app/Services directory.
 
+4. Logging to database
+
 ## Technologies 
 * Laravel
 * MySql

@@ -6,7 +6,6 @@ const store = createStore({
         user: {
             data: {},
             token: sessionStorage.getItem("Token"),
-            balance: 0
         },
         transactions: {
             data: [],
@@ -68,15 +67,13 @@ const store = createStore({
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
-            state.user.balance = 0;
         },
         setBalance: (state, response) => {
-            state.user.balance = response.new_balance;
+            state.user.data.balance = response.new_balance;
         },
         setUser: (state, response) => {
             state.user.data = response.data;
             state.user.token = response.data.token;
-            state.user.balance = response.new_balance;
             sessionStorage.setItem('Token', response.data.token);
         },
         setTransactionsLoading: (state, loading) => {
