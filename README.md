@@ -28,5 +28,11 @@ Simple banking system
 ## Steps to run the project
 - After cloning, run "composer install" command
 - run "npm i && npm run dev" in vue folder
-- run "php artisan migrate" to create database tables (migration file "create_articles_table" added by me)
+- run "php artisan migrate" to create database tables
+- run "php artisan db:seed" to seed test data
 - run "php artisan serve"
+- Then, you can login using one of database (users table emails):
+  With this password: Test@123456
+  
+- Or, you can register and create new account
+

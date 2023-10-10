@@ -1,5 +1,9 @@
 <template>
-    <PageComponent title="Dashboard">My Dashboard</PageComponent>
+    <PageComponent title="Dashboard">
+        <span class="mt-5 tex-xl font-medium flex justify-center">
+            Welcome to Bank Pro
+        </span>
+    </PageComponent>
 </template>
 
 <script>

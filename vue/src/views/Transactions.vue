@@ -27,9 +27,15 @@
                 </div>
             </div>
         </template>
-        <div v-if="transactions.loading" class="flex justify-center text-xl font-bold text-indigo-500">
+        <div v-if="transactions.loading" class="flex justify-center text-xl font-bold text-amber-500">
             Loading...
         </div>
+
+
+        <div v-else-if="!transactions.data.data.length" class="text-center text-gray-600">
+            You have not any transaction yet.
+        </div>
+
         <div v-else>
             <div class="overflow-x-auto">
                 <table class="min-w-full border-collapse border border-gray-300">
