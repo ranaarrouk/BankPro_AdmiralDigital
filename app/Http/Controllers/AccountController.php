@@ -9,6 +9,7 @@ use App\Http\Requests\DepositRequest;
 use App\Http\Requests\TransferMoneyRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AccountController extends Controller
 {
