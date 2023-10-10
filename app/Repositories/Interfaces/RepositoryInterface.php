@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface RepositoryInterface
 {
@@ -46,7 +47,7 @@ interface RepositoryInterface
     public function getByCriteria(array $criteria, array $columns = ['*'], array $relations = []): Collection;
 
 
-    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false): Collection;
+    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false, $pagination = 10): LengthAwarePaginator;
 
     /**
      * @param array $attributes

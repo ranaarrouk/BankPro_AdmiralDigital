@@ -24,7 +24,7 @@ class TransactionController extends Controller
     public function getMyTransactions(Request $request)
     {
         try {
-            $data = $this->transactionService->getUserTransactions($request->i);
+            $data = $this->transactionService->getUserTransactions();
             return TransactionResource::collection($data);
 
         } catch (\Exception $exception) {

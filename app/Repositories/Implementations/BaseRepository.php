@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Repositories\Interfaces\RepositoryInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseRepository implements RepositoryInterface
 {
@@ -42,7 +43,7 @@ class BaseRepository implements RepositoryInterface
         return $this->newQuery()->select($columns)->with($relations)->where($criteria)->get();
     }
 
-    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false): Collection
+    public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false, $pagination = 10): LengthAwarePaginator
     {
         $query = $this->newQuery()->select($columns)->with($relations);
 
@@ -59,7 +60,7 @@ class BaseRepository implements RepositoryInterface
                 $query->where($column, $operator, $value);
             }
         }
-        return $query->get();
+        return $query->paginate($pagination);
     }
 
 

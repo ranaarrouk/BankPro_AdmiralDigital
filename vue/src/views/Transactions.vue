@@ -70,6 +70,21 @@
                     </tbody>
                 </table>
             </div>
+            <div class="flex justify-center mt-5">
+                <nav class="flex justify-center relative z-0 rounded-md shadow-sm" aria-label="Pagination">
+                    <a v-for="(link, l) in transactions.links"
+                       :key="l"
+                       href="#"
+                       @click="getForPage($event, link)"
+                       :disabled="!link.url"
+                       aria-current="page"
+                       class="relative inline-flex items-center border px-4 py-2 font-medium whitespace-nowrap"
+                       :class="[link.active? 'z-10 text-indigo-600 border-indigo-500 bg-indigo-50' : 'text-grey-600 border-grey-500 bg-grey-50',
+          l === 0 ? 'rounded-l-md' : '', l === transactions.links.length - 1 ? 'rounded-r-md' : ''     ]   "
+                       v-html="link.label">
+                    </a>
+                </nav>
+            </div>
         </div>
     </PageComponent>
 </template>
@@ -84,6 +99,14 @@
 
     store.dispatch('getTransactions').then((res) => {
     });
+
+    function getForPage(ev, link) {
+        ev.preventDefault();
+        if (!link.url || link.active) {
+            return;
+        }
+        store.dispatch("getTransactions", {url: link.url});
+    }
 </script>
 
 

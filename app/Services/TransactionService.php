@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TransactionService implements TransactionServiceInterface
 {
@@ -21,13 +22,13 @@ class TransactionService implements TransactionServiceInterface
         $this->transactionRepository = $transactionRepository;
     }
 
-    public function getUserTransactions(): Collection
+    public function getUserTransactions(): LengthAwarePaginator
     {
         $conditions = [
             ['from_account_id', '=', Auth::id()],
             ['to_account_id', '=', Auth::id()],
         ];
-        return $this->transactionRepository->whereOrWhere($conditions, ['*'], ['senderAccount.user', 'recipientAccount.user'], true);
+        return $this->transactionRepository->whereOrWhere($conditions, ['*'], ['senderAccount.user', 'recipientAccount.user'], true, 5);
     }
 
     public function createDepositTransaction(Account $account, $amount): Model

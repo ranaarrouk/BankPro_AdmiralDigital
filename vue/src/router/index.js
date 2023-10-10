@@ -13,7 +13,7 @@ import store from "../store";
 const routes = [
     {
         path: '/',
-        name: 'Dashboard',
+        redirect: '/dashboard',
         component: DefaultLayout,
         meta: { requiresAuth: true},
         children: [

@@ -10,7 +10,8 @@ const store = createStore({
         },
         transactions: {
             data: [],
-            loading: false
+            loading: false,
+            links: []
         },
         notification: {
             show: false,
@@ -39,9 +40,10 @@ const store = createStore({
         logout({commit}) {
             commit('logout');
         },
-        getTransactions({commit}) {
+        getTransactions({commit}, {url = null} = {}) {
             commit('setTransactionsLoading', true);
-            return axiosClient.get('/transactions')
+            url = url || '/transactions';
+            return axiosClient.get(url)
                 .then((response) => {
                     commit('setTransactions', response);
                     commit('setTransactionsLoading', false);
@@ -70,7 +72,6 @@ const store = createStore({
             state.user.balance = 0;
         },
         setUser: (state, response) => {
-            console.log(response);
             state.user.data = response.data;
             state.user.token = response.data.data.token;
             sessionStorage.setItem('Token', response.data.token);
@@ -80,6 +81,7 @@ const store = createStore({
         },
         setTransactions: (state, transactions) => {
             state.transactions.data = transactions.data;
+            state.transactions.links = transactions.data.meta.links;
         },
         notify: (state, {type, message}) => {
             state.notification.show = true;
