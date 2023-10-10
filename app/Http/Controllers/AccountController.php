@@ -27,7 +27,7 @@ class AccountController extends Controller
             return response()->json(['message' => 'Deposit Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
 
         } catch (\Exception $exception) {
-
+            return response()->json(['message' => $exception->getMessage()], 422);
         }
     }
 
@@ -37,7 +37,7 @@ class AccountController extends Controller
             DB::transaction(function () use ($request) {
                 $this->accountService->transferMoney($request->validated());
             });
-            return response()->json(['message' => 'Deposit Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
+            return response()->json(['message' => 'Transfer Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
         } catch (\Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], 422);
         }

@@ -28,11 +28,14 @@ const store = createStore({
                 })
         },
         login({commit}, user) {
-            return axiosClient.post('/login', user)
-                .then((response) => {
-                    commit('setUser', response.data);
-                    return response
-                });
+            return axiosClient.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+                return axiosClient.post('/login', user)
+                    .then((response) => {
+                        commit('setUser', response.data);
+                        return response
+                    });
+            });
+
         },
         logout({commit}) {
             commit('logout');
