@@ -23,17 +23,15 @@ const store = createStore({
     actions: {
         register({commit}, user) {
             return axiosClient.post('/register', user)
-                .then((data) => {
-                    commit('setUser', data);
-                    return data;
+                .then((response) => {
+                    commit('setUser', response.data);
+                    return response;
                 })
-        }
-        ,
-
+        },
         login({commit}, user) {
             return axiosClient.post('/login', user)
                 .then((response) => {
-                    commit('setUser', response);
+                    commit('setUser', response.data);
                     return response
                 });
         },
@@ -53,14 +51,15 @@ const store = createStore({
         deposit({commit}, amount) {
             return axiosClient.post('/deposit/', amount)
                 .then((response) => {
-
+                    console.log(response);
+                    commit('setBalance', response.data);
                     return response;
                 });
         },
         transfer({commit}, data) {
             return axiosClient.post('/transfer', data)
                 .then((response) => {
-
+                    commit('setBalance', response.data);
                     return response;
                 });
         }
@@ -71,9 +70,13 @@ const store = createStore({
             state.user.token = null;
             state.user.balance = 0;
         },
+        setBalance: (state, response) => {
+            state.user.balance = response.new_balance;
+        },
         setUser: (state, response) => {
             state.user.data = response.data;
-            state.user.token = response.data.data.token;
+            state.user.token = response.data.token;
+            state.user.balance = response.new_balance;
             sessionStorage.setItem('Token', response.data.token);
         },
         setTransactionsLoading: (state, loading) => {
