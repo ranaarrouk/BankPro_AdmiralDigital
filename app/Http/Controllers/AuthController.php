@@ -4,8 +4,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Exceptions\InvalidCredentialsException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\ErrorResource;
 use App\Http\Resources\UserResource;
 use App\Services\StoreUserService;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +40,14 @@ class AuthController
     {
         $credentials = $request->validated();
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['error' => 'Credentials are not correct'], 422);
+        try {
+            if (!Auth::attempt($credentials)) {
+                throw new InvalidCredentialsException();
+            }
+
+        } catch (InvalidCredentialsException $exception) {
+            return response(new ErrorResource($exception), $exception->getCode());
+
         }
 
         $user = Auth::user();

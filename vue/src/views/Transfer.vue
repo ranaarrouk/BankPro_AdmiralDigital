@@ -70,16 +70,18 @@
         errorMsg.value = null;
         if (model.value.amount <= 0)
             errorMsg.value = "The amount field must be at least 0.1";
-
-        store.dispatch('transfer', model.value)
-            .then((res) => {
-                store.commit('notify', {
-                    type: 'success',
-                    message: 'Transfer successfully'
-                });
-            }).catch(err => {
-            errorMsg.value = err.response.data.message;
-        });
+        else {
+            store.dispatch('transfer', model.value)
+                .then((res) => {
+                    store.commit('notify', {
+                        type: 'success',
+                        message: res.data.message
+                    });
+                }).catch(err => {
+                    console.log(err);
+                errorMsg.value = err.response.data.message;
+            });
+        }
     }
 </script>
 

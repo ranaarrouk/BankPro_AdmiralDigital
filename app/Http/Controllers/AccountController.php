@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\InvalidAccountNumberException;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ErrorResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\AccountServiceInterface;
@@ -64,10 +65,10 @@ class AccountController extends Controller
 
         } catch (InvalidAccountNumberException $exception) {
             DB::rollBack();
-            return response()->json(['message' => $exception->getMessage()], 422);
+            return response()->json(new ErrorResource($exception), $exception->getCode());
         } catch (InsufficientBalanceException $exception) {
             DB::rollBack();
-            return response()->json(['message' => $exception->getMessage()], 422);
+            return response()->json(new ErrorResource($exception), $exception->getCode());
         } catch (\Exception $exception) {
             DB::rollBack();
             return response()->json(['message' => 'Something went wrong'], 422);

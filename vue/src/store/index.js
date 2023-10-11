@@ -28,6 +28,7 @@ const store = createStore({
                 })
         },
         login({commit}, user) {
+            // setup CSRF protection
             return axiosClient.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
                 return axiosClient.post('/login', user)
                     .then((response) => {
@@ -53,7 +54,6 @@ const store = createStore({
         deposit({commit}, amount) {
             return axiosClient.post('/deposit/', amount)
                 .then((response) => {
-                    console.log(response);
                     commit('setBalance', response.data);
                     return response;
                 });
