@@ -28,11 +28,6 @@ class BaseRepository implements RepositoryInterface
         return $this->findByCriteria(['id' => $id], $columns, $relations);
     }
 
-    public function findByUuid(string $uuid, array $columns = ['*'], array $relations = []): Model
-    {
-        return $this->findByCriteria(['uuid' => $uuid], $columns, $relations);
-    }
-
     public function findByCriteria(array $criteria, array $columns = ['*'], array $relations = []): Model
     {
         return $this->newQuery()->select($columns)->with($relations)->where($criteria)->firstOrFail();

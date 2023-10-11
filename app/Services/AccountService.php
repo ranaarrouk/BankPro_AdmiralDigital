@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Exceptions\InsufficientBalanceException;
 use App\Models\Account;
 use App\Models\User;
 use App\Repositories\Interfaces\AccountRepositoryInterface;
@@ -49,8 +50,8 @@ class AccountService implements AccountServiceInterface
         if (!$toAccount)
             throw new \Exception('There is no account with this account number');
 
-        if ($amount < 0 || $amount > $account->balance)
-            throw new \Exception('There is no enough money in your account');
+        if ($amount > $account->balance)
+            throw new InsufficientBalanceException();
 
         $this->accountRepository->update($account, ['balance' => $account->balance - $amount]);
         $this->accountRepository->update($toAccount, ['balance' => $toAccount->balance + $amount]);

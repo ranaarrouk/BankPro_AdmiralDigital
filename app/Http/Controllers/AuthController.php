@@ -45,14 +45,11 @@ class AuthController
     {
         $credentials = $request->validated();
 
-        $remember = $credentials['remember'] ? $credentials['remember'] : false;
-        unset($credentials['remember']);
-        if (!Auth::attempt($credentials, $remember)) {
+        if (!Auth::attempt($credentials)) {
             return response()->json(['error' => 'Credentials are not correct'], 422);
         }
 
         $user = Auth::user();
-//        $token = $user->createToken('authToken')->plainTextToken;
 
         return new UserResource($user);
     }

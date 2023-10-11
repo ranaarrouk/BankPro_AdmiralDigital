@@ -5,7 +5,8 @@
         </div>
         <div v-else class="flex justify-center">
             <form class="w-full max-w-lg" @submit.prevent="deposit" method="post">
-                <div v-if="errorMsg" class="flex items-center justify-between mb-5 px-6 py-3 bg-red-500 text-white rounded">
+                <div v-if="errorMsg"
+                     class="flex items-center justify-between mb-5 px-6 py-3 bg-red-500 text-white rounded">
                     {{ errorMsg }}
                     <span @click="errorMsg = ''"
                           class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">
@@ -54,11 +55,14 @@
 
     function deposit() {
         errorMsg.value = null;
+        if (model.value.amount <= 0)
+            errorMsg.value = "The amount field must be at least 0.1";
+
         store.dispatch('deposit', model.value)
             .then((res) => {
                 store.commit('notify', {
                     type: 'success',
-                    message:'Deposit successfully'
+                    message: 'Deposit successfully'
                 });
             }).catch(err => {
             errorMsg.value = err.response.data.message;

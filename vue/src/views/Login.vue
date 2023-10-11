@@ -62,7 +62,6 @@
   const user = {
     email: '',
     password: '',
-    remember: false
   }
 
   let errorMsg = ref('');
@@ -75,7 +74,6 @@
           name: 'Dashboard'
         });
       }).catch(err => {
-          console.log(err);
       errorMsg.value = err.response.data.message;
     });
   }

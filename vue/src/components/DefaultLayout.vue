@@ -33,7 +33,7 @@
                                         class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                         <span class="absolute -inset-1.5"/>
                                         <span class="sr-only">Open user menu</span>
-                                        <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt=""/>
+                                        <img class="h-8 w-8 rounded-full" src="https://spesialis1.orthopaedi.fk.unair.ac.id/wp-content/uploads/2021/02/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" alt=""/>
                                     </MenuButton>
                                 </div>
                                 <transition enter-active-class="transition ease-out duration-100"
@@ -81,7 +81,9 @@
                 <div class="border-t border-gray-700 pb-3 pt-4">
                     <div class="flex items-center px-5">
                         <div class="flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt=""/>
+                            <img class="h-10 w-10 rounded-full"
+                                 src="https://spesialis1.orthopaedi.fk.unair.ac.id/wp-content/uploads/2021/02/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg"
+                                 alt=""/>
                         </div>
                         <div class="ml-3">
                             <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
@@ -109,21 +111,19 @@
     import Notification from './Notification.vue';
     import {useRouter} from 'vue-router';
     import {useStore} from 'vuex';
+    import {computed} from 'vue';
 
-    const user = {
-        name: 'Tom Cook',
-        email: 'tom@example.com',
-        imageUrl:
-            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    }
+    const store = useStore();
+
+    const router = useRouter();
+
+    const user = computed(() => store.state.user.data);
+
     const navigation = [
         {name: 'Dashboard', to: {name: 'Dashboard'}},
         {name: 'Transactions', to: {name: 'Transactions'}},
         {name: 'My Account', to: {name: 'Account'}},
     ];
-
-    const router = useRouter();
-    const store = useStore();
 
     function logout() {
         store.dispatch('logout')

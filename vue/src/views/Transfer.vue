@@ -25,7 +25,7 @@
                         <input
                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                             id="account_number" name="account_number" v-model="model.account_number" type="text"
-                            placeholder="xxxxxxxxx">
+                            placeholder="xxxxxxxxxx">
                         <p class="text-red-500 text-xs italic">Please fill out this field.</p>
                     </div>
                     <div class="w-full md:w-1/2 px-3">
@@ -68,6 +68,9 @@
 
     function transfer() {
         errorMsg.value = null;
+        if (model.value.amount <= 0)
+            errorMsg.value = "The amount field must be at least 0.1";
+
         store.dispatch('transfer', model.value)
             .then((res) => {
                 store.commit('notify', {

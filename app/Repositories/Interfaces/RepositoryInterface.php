@@ -21,15 +21,6 @@ interface RepositoryInterface
     public function findById(int $id, array $columns = ['*'], array $relations = []): Model;
 
     /**
-     * @param string $uuid
-     * @param array $columns
-     * @param array $relations
-     * @return Model
-     * @throws ModelNotFoundException
-     */
-    public function findByUuid(string $uuid, array $columns = ['*'], array $relations = []): Model;
-
-    /**
      * @param array $criteria
      * @param array $columns
      * @param array $relations
@@ -46,6 +37,9 @@ interface RepositoryInterface
      */
     public function getByCriteria(array $criteria, array $columns = ['*'], array $relations = []): Collection;
 
+    /**
+     * Handle conditions with implement 'or' between queries.
+     */
 
     public function whereOrWhere(array $conditions, array $columns = ['*'], array $relations = [], bool $orWhere = false, $pagination = 10): LengthAwarePaginator;
 
