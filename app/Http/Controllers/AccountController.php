@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InsufficientBalanceException;
+use App\Exceptions\InvalidAccountNumberException;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\AccountServiceInterface;
 use App\Http\Requests\DepositRequest;
@@ -17,12 +19,20 @@ class AccountController extends Controller
 {
     private AccountServiceInterface $accountService;
 
+    /**
+     * AccountController constructor.
+     * @param AccountServiceInterface $service
+     */
     public function __construct(AccountServiceInterface $service)
     {
         $this->accountService = $service;
     }
 
-    public function deposit(DepositRequest $request)
+    /**
+     * @param DepositRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deposit(DepositRequest $request): JsonResponse
     {
         try {
 
@@ -38,7 +48,11 @@ class AccountController extends Controller
         }
     }
 
-    public function transferMoney(TransferMoneyRequest $request)
+    /**
+     * @param TransferMoneyRequest $request
+     * @return JsonResponse
+     */
+    public function transferMoney(TransferMoneyRequest $request): JsonResponse
     {
         try {
 
@@ -48,6 +62,9 @@ class AccountController extends Controller
 
             return response()->json(['message' => 'Transfer Successfully', 'new_balance' => number_format(Auth::user()->account->balance, 2) . ' $']);
 
+        } catch (InvalidAccountNumberException $exception) {
+            DB::rollBack();
+            return response()->json(['message' => $exception->getMessage()], 422);
         } catch (InsufficientBalanceException $exception) {
             DB::rollBack();
             return response()->json(['message' => $exception->getMessage()], 422);

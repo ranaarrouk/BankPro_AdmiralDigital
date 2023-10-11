@@ -9,6 +9,9 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    /**
+     * Transactions table to save account transactions
+     */
     protected $fillable = ['type', 'from_account_id', 'to_account_id', 'amount'];
 
     public function senderAccount()

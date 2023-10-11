@@ -15,6 +15,10 @@ class StoreUserService
         $this->userRepository = $userRepository;
     }
 
+    /**
+     * @param array $userData
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function execute(array $userData)
     {
         $user = $this->userRepository->create($userData);
