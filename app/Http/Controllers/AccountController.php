@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InsufficientBalanceException;
 use App\Exceptions\InvalidAccountNumberException;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\ErrorResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Services\AccountServiceInterface;
 use App\Http\Requests\DepositRequest;
 use App\Http\Requests\TransferMoneyRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use function Symfony\Component\HttpFoundation\Tests\Session\Storage\Handler\rollBack;
 
 class AccountController extends Controller
 {
